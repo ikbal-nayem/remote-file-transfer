@@ -1,11 +1,13 @@
 #! /usr/bin/bash
 
 ADDRESS="root@194.233.76.227"
-PASSWORD="78l1QbIiAZRqPdLNSnob70Jlx2G"
+PASSWORD="22l1QbIiAZRqPdLNSnob70Jlx5G"
+# PASSWORD="WebxFront@IKU22"
 SERVER_LANDING_DIR="/usr/share/nginx/html/webx"
 SERVER_MERCHANT_DIR="/usr/share/nginx/html/admin"
+SERVER_WEBX_ADMIN_DIR="/usr/share/nginx/html/webxadmin"
 
-PROJECTS=("landing" "merchant")
+PROJECTS=("landing" "merchant" "webxadmin")
 
 CYAN='\033[1;36m'
 RED='\033[1;31m'
@@ -28,14 +30,16 @@ exitWithMessage() {
 
 if [ -z "$project" ] || [ -z "$local_dir" ]; then
 	exitWithMessage "${CYAN}Usage:${NC} ./deploy.sh -p <project> -d <local_dir>${NC}"
-elif [ "$project" != "landing" ] && [ "$project" != "merchant" ]; then
+elif [ "$project" != "${PROJECTS[0]}" ] && [ "$project" != "${PROJECTS[1]}" ] && [ "$project" != "${PROJECTS[2]}" ]; then
 	exitWithMessage "Project should be one of the following: $(IFS=,; echo "${PROJECTS[*]}")"
 fi
 
-if [ "$project" == "landing" ]; then
+if [ "$project" == "${PROJECTS[0]}" ]; then
 	server_dir="$SERVER_LANDING_DIR"
-elif [ "$project" == "merchant" ]; then
+elif [ "$project" == "${PROJECTS[1]}" ]; then
 	server_dir="$SERVER_MERCHANT_DIR"
+elif [ "$project" == "${PROJECTS[2]}" ]; then
+	server_dir="$SERVER_WEBX_ADMIN_DIR"
 fi
 
 delete_dir="$server_dir/*"
